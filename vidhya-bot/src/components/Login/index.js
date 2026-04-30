@@ -25,7 +25,7 @@ export default function Login({ onLogin }) {
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       // Make sure this matches the port your FastAPI server is running on (8000 or 5000)
-      const response = await fetch("http://127.0.0.1:8000/api/google-login", {
+      const response = await fetch("http://127.0.0.1:5000/api/google-login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
