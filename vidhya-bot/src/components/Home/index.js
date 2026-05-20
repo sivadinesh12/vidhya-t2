@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../Layout/PageLayout";
 import "./index.css";
@@ -18,31 +18,10 @@ const SCHEDULE = [
 ];
 
 const QUICK = [
-  { icon: "📝", title: "Mock Tests",    sub: "250+ tests available",  path: "/mock-tests",    color: "#d6eaf8" },
-  { icon: "📊", title: "Analytics",    sub: "Track your progress",   path: "/analytics",     color: "#d5f5e3" },
-  { icon: "🗂️", title: "Flashcards",  sub: "Smart revision",        path: "/flashcards",    color: "#e8daef" },
-  { icon: "🎯", title: "Study Planner",sub: "Custom schedule",       path: "/study-planner", color: "#fdebd0" },
-];
-
-const FEATURES = [
-  {
-    cls: "ncert", icon: "🎓", tag: "CBSE · State Boards", title: "Board Exams",
-    desc: "Complete Class XI & XII preparation with chapter-wise notes, past papers, and model question papers.",
-    subjects: ["Physics", "Chemistry", "Biology", "Mathematics", "English"],
-    meta: "Class XI & XII · All Boards", action: "Start Preparing", path: "/ncert",
-  },
-  {
-    cls: "neet", icon: "🏥", tag: "Medical Entrance", title: "NEET Syllabus",
-    desc: "Structured topic-wise syllabus as per NTA guidelines with weightage analysis and question trends.",
-    subjects: ["Physics", "Chemistry", "Botany", "Zoology"],
-    meta: "97 chapters · 1800+ topics", action: "View Syllabus", path: "/neet",
-  },
-  {
-    cls: "jee", icon: "⚗️", tag: "Engineering Entrance", title: "JEET Books",
-    desc: "Curated reference books and study material for JEE — concept builders and formula sheets.",
-    subjects: ["H.C. Verma", "R.D. Sharma", "O.P. Tandon", "Cengage"],
-    meta: "60+ books · 2000+ problems", action: "Browse Material", path: "/jeet",
-  }
+  { icon: "📝", title: "Mock Tests",    sub: "250+ tests available",  path: "/mock-tests" },
+  { icon: "📊", title: "Analytics",    sub: "Track your progress",   path: "/analytics" },
+  { icon: "🗂️", title: "Flashcards",  sub: "Smart revision",        path: "/flashcards" },
+  { icon: "🎯", title: "Study Planner",sub: "Custom schedule",       path: "/study-planner" },
 ];
 
 export default function Home({ userName }) {
@@ -50,116 +29,89 @@ export default function Home({ userName }) {
 
   return (
     <PageLayout userName={userName}>
-      <div className="app">
+      <div className="home-page">
         {/* Hero */}
-        <section className="hero">
-          <div className="hero-inner">
-            <div>
-              <div className="hero-tag">✨ 2025–26 Session Active</div>
-              <h1>Hello, <span>{userName}!</span><br />Ready to Study?</h1>
+        <section className="home-hero">
+          <div className="home-hero-inner">
+            <div className="home-hero-content">
+              <div className="home-hero-tag">✨ 2025–26 Session Active</div>
+              <h1>Hello, <span className="home-hero-name">{userName}!</span><br />Ready to Study?</h1>
               <p>Your personalised dashboard is loaded. Continue where you left off or explore new chapters today.</p>
-              <div className="hero-btns">
-                <button className="hero-btn solid" onClick={() => navigate('/ncert')}>Start Preparing</button>
-                <button className="hero-btn outline" onClick={() => navigate('/mock-tests')}>Take a Mock Test</button>
+              <div className="home-hero-btns">
+                <button className="home-btn-solid" onClick={() => navigate('/neet')}>Start Preparing</button>
+                <button className="home-btn-outline" onClick={() => navigate('/mock-tests')}>Take a Mock Test</button>
               </div>
             </div>
-            <div className="hero-stats">
+            <div className="home-hero-stats">
               {[["247", "Chapters Done"], ["89%", "Avg. Score"], ["18", "Day Streak"]].map(([n, l]) => (
-                <div key={l} className="stat-card">
-                  <div className="num">{n}</div>
-                  <div className="lbl">{l}</div>
+                <div key={l} className="home-stat-card">
+                  <div className="home-stat-num">{n}</div>
+                  <div className="home-stat-lbl">{l}</div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <main className="main">
-          {/* Study Resources */}
-          <div className="section-header">
-            <h2 className="section-title">Study <span>Resources</span></h2>
-            <button className="see-all" onClick={() => navigate('/ncert')}>View All →</button>
-          </div>
-          <div className="feature-grid">
-            {FEATURES.map((f, i) => (
-              <div key={f.cls} className={`feature-card ${f.cls} fade-up delay-${i + 1}`}>
-                <div className="feature-card-header">
-                  <span className="feature-card-icon">{f.icon}</span>
-                  <div className="feature-card-tag">{f.tag}</div>
-                  <div className="feature-card-title">{f.title}</div>
-                  <p className="feature-card-desc">{f.desc}</p>
-                </div>
-                <div className="feature-card-body">
-                  <div className="feature-card-subjects">
-                    {f.subjects.map(s => <span key={s} className="subject-chip">{s}</span>)}
-                  </div>
-                  <div className="feature-card-footer">
-                    <span className="card-meta">{f.meta}</span>
-                    <button className="card-action" onClick={() => navigate(f.path)}>{f.action}</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
+        <div className="home-main">
           {/* Quick Access */}
-          <div className="section-header">
-            <h2 className="section-title">Quick <span>Access</span></h2>
+          <div className="home-section-header">
+            <h2 className="home-section-title">Quick <span>Access</span></h2>
           </div>
-          <div className="quick-grid">
+          <div className="home-quick-grid">
             {QUICK.map(q => (
-              <div key={q.title} className="quick-card fade-up" onClick={() => navigate(q.path)}>
-                <div className="quick-icon">{q.icon}</div>
-                <div>
-                  <div className="quick-title">{q.title}</div>
-                  <div className="quick-sub">{q.sub}</div>
+              <div key={q.title} className="home-quick-card fade-up" onClick={() => navigate(q.path)}>
+                <div className="home-quick-icon">{q.icon}</div>
+                <div className="home-quick-text">
+                  <div className="home-quick-title">{q.title}</div>
+                  <div className="home-quick-sub">{q.sub}</div>
                 </div>
-                <div className="quick-arrow">›</div>
+                <div className="home-quick-arrow">›</div>
               </div>
             ))}
           </div>
 
           {/* Progress + Schedule */}
-          <div className="section-header">
-            <h2 className="section-title">Your <span>Progress</span></h2>
-            <button className="see-all" onClick={() => navigate('/progress')}>Full Report →</button>
+          <div className="home-section-header">
+            <h2 className="home-section-title">Your <span>Progress</span></h2>
+            <button className="home-see-all" onClick={() => navigate('/progress')}>Full Report →</button>
           </div>
-          <div className="progress-section">
-            <div className="progress-card">
+          <div className="home-progress-section">
+            <div className="home-progress-card">
               <h3>Chapter Progress</h3>
               {CHAPTERS.map(c => (
-                <div key={c.name} className="chapter-item">
-                  <div className="chapter-icon" style={{ background: c.bg }}>{c.icon}</div>
-                  <div className="chapter-info">
-                    <div className="chapter-name">{c.name}</div>
-                    <div className="chapter-sub">{c.subject}</div>
-                    <div className="progress-bar-wrap">
-                      <div className="progress-bar">
-                        <div className="progress-fill" style={{ width: `${c.pct}%`, background: c.color }} />
+                <div key={c.name} className="home-chapter-item">
+                  <div className="home-chapter-icon" style={{ background: c.bg }}>{c.icon}</div>
+                  <div className="home-chapter-info">
+                    <div className="home-chapter-name">{c.name}</div>
+                    <div className="home-chapter-sub">{c.subject}</div>
+                    <div className="home-progress-bar-wrap">
+                      <div className="home-progress-bar">
+                        <div className="home-progress-fill" style={{ width: `${c.pct}%`, background: c.color }} />
                       </div>
-                      <div className="progress-pct" style={{ color: c.color }}>{c.pct}%</div>
+                      <div className="home-progress-pct" style={{ color: c.color }}>{c.pct}%</div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="progress-card">
+            <div className="home-progress-card">
               <h3>Today's Schedule</h3>
-              <div className="schedule-list">
+              <div className="home-schedule-list">
                 {SCHEDULE.map(s => (
-                  <div key={s.time} className="schedule-item">
-                    <div className="schedule-dot" style={{ background: s.color }} />
+                  <div key={s.time} className="home-schedule-item">
+                    <div className="home-schedule-dot" style={{ background: s.color }} />
                     <div style={{ flex: 1 }}>
-                      <div className="schedule-time">{s.time}</div>
-                      <div className="schedule-name">{s.name}</div>
-                      <div className="schedule-detail">{s.detail}</div>
+                      <div className="home-schedule-time">{s.time}</div>
+                      <div className="home-schedule-name">{s.name}</div>
+                      <div className="home-schedule-detail">{s.detail}</div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </PageLayout>
   );
