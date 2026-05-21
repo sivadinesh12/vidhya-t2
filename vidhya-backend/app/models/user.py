@@ -1,7 +1,6 @@
 """
 app/models/user.py  -  User Document Model (Beanie ODM)
 Passwords stored as bcrypt hashes. Never plain text.
-Uses bcrypt directly (no passlib) to avoid version conflicts.
 """
 from typing import Optional
 from datetime import datetime
@@ -44,22 +43,22 @@ class User(Document):
         name = "users"
 
     def set_password(self, plain: str):
-        """Hash password using bcrypt directly."""
-        password_bytes = plain.encode("utf-8")
-        salt = bcrypt.gensalt()
-        hashed = bcrypt.hashpw(password_bytes, salt)
+        """Hash and store password using bcrypt."""
+        salt   = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(plain.encode("utf-8"), salt)
         self.password = hashed.decode("utf-8")
 
     def verify_password(self, plain: str) -> bool:
-        """Verify a plain password against the stored hash."""
+        """Verify a plain password against the stored bcrypt hash."""
         if not self.password:
             return False
-        return bcrypt.checkpw(
-            plain.encode("utf-8"),
-            self.password.encode("utf-8")
-        )
+        try:
+            return bcrypt.checkpw(plain.encode("utf-8"), self.password.encode("utf-8"))
+        except Exception:
+            return False
 
     def to_safe_dict(self) -> dict:
+        """Return user data safe to send to the client (no password)."""
         return {
             "id"          : str(self.id),
             "name"        : self.name,
@@ -69,13 +68,14 @@ class User(Document):
             "target_exam" : self.target_exam.value if self.target_exam and hasattr(self.target_exam, "value") else self.target_exam,
             "target_year" : self.target_year,
             "is_active"   : self.is_active,
+            "google_linked": bool(self.google_id),
             "last_login"  : self.last_login.isoformat() if self.last_login else None,
             "created_at"  : self.created_at.isoformat() if self.created_at else None,
             "updated_at"  : self.updated_at.isoformat() if self.updated_at else None,
         }
 
 
-# ── Request/Response schemas ──────────────────────────────────────────────────
+# ── Request / Response schemas ────────────────────────────────────────────────
 class UserSignupSchema(BaseModel):
     name        : str = Field(..., min_length=2, max_length=60)
     email       : EmailStr

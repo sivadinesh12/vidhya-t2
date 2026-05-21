@@ -21,8 +21,9 @@ from app.routes import chat, mock_tests, notifications, password_reset, analytic
 
 
 def rate_limit_key(request: Request):
+    """Skip rate limiting for CORS preflight OPTIONS requests."""
     if request.method == "OPTIONS":
-        return None  # skip rate limiting for CORS preflight
+        return None
     return get_remote_address(request)
 
 
@@ -51,13 +52,17 @@ def create_app() -> FastAPI:
     app.state.limiter = limiter
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+    # Parse allowed origins from settings (comma-separated)
     origins = [o.strip() for o in settings.CLIENT_URL.split(",")]
+    logger.info(f"🌐 CORS allowed origins: {origins}")
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["*"],
     )
 
     uploads_dir = os.path.join(os.path.dirname(__file__), "uploads")
@@ -66,21 +71,25 @@ def create_app() -> FastAPI:
 
     @app.get("/health", tags=["Health"])
     async def health():
-        return {"success": True, "message": "Vidhya API is healthy 🚀", "env": settings.ENVIRONMENT}
+        return {
+            "success": True,
+            "message": "Vidhya API is healthy 🚀",
+            "env": settings.ENVIRONMENT,
+        }
 
     # ── Register all routers ──────────────────────────────────────────────────
     PREFIX = "/api/v1"
-    app.include_router(auth.router,             prefix=f"{PREFIX}/auth",            tags=["Auth"])
-    app.include_router(password_reset.router,   prefix=f"{PREFIX}/auth",            tags=["Auth"])
-    app.include_router(users.router,            prefix=f"{PREFIX}/users",           tags=["Users"])
-    app.include_router(flashcards.router,       prefix=f"{PREFIX}/flashcards",      tags=["Flashcards"])
-    app.include_router(study_plans.router,      prefix=f"{PREFIX}/study-plans",     tags=["Study Plans"])
-    app.include_router(progress.router,         prefix=f"{PREFIX}/progress",        tags=["Progress"])
-    app.include_router(uploads.router,          prefix=f"{PREFIX}/upload",          tags=["Uploads"])
-    app.include_router(chat.router,             prefix=f"{PREFIX}/chat",            tags=["VIDYA AI Chat"])
-    app.include_router(mock_tests.router,       prefix=f"{PREFIX}/mock-tests",      tags=["Mock Tests"])
-    app.include_router(notifications.router,    prefix=f"{PREFIX}/notifications",   tags=["Notifications"])
-    app.include_router(analytics.router,        prefix=f"{PREFIX}/analytics",       tags=["Analytics"])
+    app.include_router(auth.router,           prefix=f"{PREFIX}/auth",          tags=["Auth"])
+    app.include_router(password_reset.router, prefix=f"{PREFIX}/auth",          tags=["Auth"])
+    app.include_router(users.router,          prefix=f"{PREFIX}/users",         tags=["Users"])
+    app.include_router(flashcards.router,     prefix=f"{PREFIX}/flashcards",    tags=["Flashcards"])
+    app.include_router(study_plans.router,    prefix=f"{PREFIX}/study-plans",   tags=["Study Plans"])
+    app.include_router(progress.router,       prefix=f"{PREFIX}/progress",      tags=["Progress"])
+    app.include_router(uploads.router,        prefix=f"{PREFIX}/upload",        tags=["Uploads"])
+    app.include_router(chat.router,           prefix=f"{PREFIX}/chat",          tags=["VIDYA AI Chat"])
+    app.include_router(mock_tests.router,     prefix=f"{PREFIX}/mock-tests",    tags=["Mock Tests"])
+    app.include_router(notifications.router,  prefix=f"{PREFIX}/notifications", tags=["Notifications"])
+    app.include_router(analytics.router,      prefix=f"{PREFIX}/analytics",     tags=["Analytics"])
 
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):

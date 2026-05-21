@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.eef75b78.css",
+    "main.js": "/static/js/main.f34b3118.js",
+    "static/js/453.8359aa08.chunk.js": "/static/js/453.8359aa08.chunk.js",
+    "static/media/vidya_icon.png": "/static/media/vidya_icon.b3ce296b9a23fb825267.png",
+    "static/media/vidya_text.png": "/static/media/vidya_text.4595433cc4a500859a13.png",
+    "static/media/logo.png": "/static/media/logo.025c998ab31e97804e47.png",
+    "index.html": "/index.html",
+    "main.eef75b78.css.map": "/static/css/main.eef75b78.css.map",
+    "main.f34b3118.js.map": "/static/js/main.f34b3118.js.map",
+    "453.8359aa08.chunk.js.map": "/static/js/453.8359aa08.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eef75b78.css",
+    "static/js/main.f34b3118.js"
+  ]
+}

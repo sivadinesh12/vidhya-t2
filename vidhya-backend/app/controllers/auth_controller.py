@@ -1,7 +1,7 @@
 """
 app/controllers/auth_controller.py  -  Authentication Controller
 Handles: signup, login, Google OAuth, get_me, logout
-All login sessions saved to MongoDB.
+All sessions saved to MongoDB. Users can re-login anytime.
 """
 from datetime import datetime
 from fastapi import HTTPException
@@ -43,12 +43,12 @@ async def _send_welcome_notification(user_id: str, name: str):
 
 # ── POST /api/v1/auth/signup ──────────────────────────────────────────────────
 async def signup(body: UserSignupSchema):
-    # Check duplicate email
+    # Check for duplicate email
     existing = await User.find_one(User.email == body.email.lower())
     if existing:
         raise HTTPException(status_code=409, detail="An account with this email already exists.")
 
-    # Create user — password hashed in set_password()
+    # Create user — password hashed inside set_password()
     user = User(
         name        = body.name,
         email       = body.email.lower(),
@@ -66,7 +66,6 @@ async def signup(body: UserSignupSchema):
     await _send_welcome_notification(str(user.id), user.name)
 
     token = create_access_token(str(user.id), user.role, user.email)
-
     logger.info(f"✅ New signup: {user.email} | exam={user.target_exam}")
 
     return success_response("Account created successfully.", {
@@ -79,8 +78,18 @@ async def signup(body: UserSignupSchema):
 async def login(body: UserLoginSchema):
     user = await User.find_one(User.email == body.email.lower())
 
-    if not user or not user.verify_password(body.password):
-        raise HTTPException(status_code=401, detail="Invalid email or password.")
+    if not user:
+        raise HTTPException(status_code=401, detail="No account found with this email.")
+
+    # Google-only accounts have no password
+    if not user.password:
+        raise HTTPException(
+            status_code=400,
+            detail="This account uses Google Sign-In. Please login with Google."
+        )
+
+    if not user.verify_password(body.password):
+        raise HTTPException(status_code=401, detail="Incorrect password.")
 
     if not user.is_active:
         raise HTTPException(status_code=403, detail="Account deactivated. Contact support.")
@@ -91,7 +100,6 @@ async def login(body: UserLoginSchema):
     await user.save()
 
     token = create_access_token(str(user.id), user.role, user.email)
-
     logger.info(f"✅ Login: {user.email} | role={user.role} | at={user.last_login}")
 
     return success_response("Login successful.", {
@@ -117,7 +125,7 @@ async def google_auth(body: GoogleAuthSchema):
             settings.GOOGLE_CLIENT_ID,
         )
     except Exception as e:
-        logger.error(f"Google token error: {e}")
+        logger.error(f"Google token verification error: {e}")
         raise HTTPException(status_code=401, detail="Invalid Google token. Please try again.")
 
     google_id = info.get("sub")
@@ -126,9 +134,14 @@ async def google_auth(body: GoogleAuthSchema):
     picture   = info.get("picture")
     is_new    = False
 
+    if not email:
+        raise HTTPException(status_code=400, detail="Google account has no email address.")
+
+    # Find by google_id OR email (handles account linking)
     user = await User.find_one({"$or": [{"google_id": google_id}, {"email": email}]})
 
     if user:
+        # Link google_id if not already linked
         if not user.google_id:
             user.google_id = google_id
         if picture and not user.avatar:

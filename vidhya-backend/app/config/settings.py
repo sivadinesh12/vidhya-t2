@@ -1,23 +1,21 @@
 """
-app/config/settings.py  –  Application Settings
+app/config/settings.py  -  Application Settings
 Reads from .env file using Pydantic BaseSettings.
-All config values are type-checked automatically.
 """
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     # Server
-    PORT: int = 5000
-    ENVIRONMENT: str = "development"
+    PORT        : int = 5000
+    ENVIRONMENT : str = "development"
 
     # MongoDB
-    MONGODB_URI: str = "mongodb://localhost:27017/vidhya"
+    MONGODB_URI : str = "mongodb://localhost:27017/vidhya"
 
     # JWT
-    JWT_SECRET: str = "change_this_in_production"
-    JWT_ALGORITHM: str = "HS256"
+    JWT_SECRET      : str = "change_this_in_production"
+    JWT_ALGORITHM   : str = "HS256"
     JWT_EXPIRES_DAYS: int = 7
 
     # Google OAuth
@@ -29,10 +27,9 @@ class Settings(BaseSettings):
     # Rate Limiting
     RATE_LIMIT: str = "100/minute"
 
-    # CORS
+    # CORS — comma-separated list of allowed frontend origins
     CLIENT_URL: str = "http://localhost:3000"
 
-    # Tell Pydantic to load from .env file
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -41,5 +38,4 @@ class Settings(BaseSettings):
     )
 
 
-# Single shared instance used across the app
 settings = Settings()

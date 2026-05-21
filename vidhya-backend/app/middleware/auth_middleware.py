@@ -18,7 +18,6 @@ from jose import JWTError
 from app.models.user import User
 from app.utils.jwt_helper import decode_access_token
 
-# FastAPI's built-in Bearer token extractor
 bearer_scheme = HTTPBearer()
 
 
@@ -46,10 +45,16 @@ async def get_current_user(
 
     user = await User.get(user_id)
     if not user:
-        raise HTTPException(status_code=401, detail="User account not found.")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User account not found. Please sign up again.",
+        )
 
     if not user.is_active:
-        raise HTTPException(status_code=403, detail="Account deactivated. Contact support.")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account deactivated. Contact support.",
+        )
 
     return user
 
