@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import vidyaLogo from "../../assets/logo.png";
 
-const API_URL = "http://localhost:5000/api/v1";
+const API_URL = "https://vidya-beige.vercel.app/api/v1";
 
 const saveSession = (token, user) => {
   localStorage.setItem("vidhya_token", token);
