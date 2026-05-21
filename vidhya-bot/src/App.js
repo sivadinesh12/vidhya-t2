@@ -3,8 +3,10 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import "./App.css";
 
+// Component Imports
 import Login        from './components/Login';
 import Signup       from './components/signup';
+import Welcome from './components/Welcome';// Assuming you created the Welcome folder here
 import Home         from "./components/Home";
 import NEETSyllabus from "./components/pages/NEETSyllabus";
 import JEEBooks     from "./components/pages/Jeebooks";
@@ -16,8 +18,7 @@ import StudyPlanner from "./components/pages/StudyPlanner";
 import Progress     from "./components/pages/Progress";
 import VIDYAPage    from "./components/pages/VIDYA";
 
-const GOOGLE_CLIENT_ID =
-  "13111651638-rbfbn25jb9pf3ngbnvif4b07rgur8ur2.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "13111651638-rbfbn25jb9pf3ngbnvif4b07rgur8ur2.apps.googleusercontent.com";
 
 export default function App() {
   const [user, setUser] = useState(() => {
@@ -39,6 +40,12 @@ export default function App() {
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Router>
         <Routes>
+          {/* Public Routes */}
+          <Route path="/login"         element={<Login  onLogin={handleLogin} />} />
+          <Route path="/signup"        element={<Signup onLogin={handleLogin} />} />
+          <Route path="/welcome"       element={<Welcome />} />
+
+          {/* Protected Routes */}
           <Route path="/home"          element={<P el={<Home         userName={user} onLogout={handleLogout} />} />} />
           <Route path="/neet"          element={<P el={<NEETSyllabus userName={user} onLogout={handleLogout} />} />} />
           <Route path="/jee"           element={<P el={<JEEBooks     userName={user} onLogout={handleLogout} />} />} />
@@ -49,8 +56,8 @@ export default function App() {
           <Route path="/study-planner" element={<P el={<StudyPlanner userName={user} onLogout={handleLogout} />} />} />
           <Route path="/progress"      element={<P el={<Progress     userName={user} onLogout={handleLogout} />} />} />
           <Route path="/vidya"         element={<P el={<VIDYAPage    userName={user} onLogout={handleLogout} />} />} />
-          <Route path="/login"         element={<Login  onLogin={handleLogin} />} />
-          <Route path="/signup"        element={<Signup onLogin={handleLogin} />} />
+
+          {/* Fallback Route */}
           <Route path="*"              element={<Navigate to="/login" />} />
         </Routes>
       </Router>

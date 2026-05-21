@@ -70,9 +70,12 @@ export default function Signup({ onLogin }) {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        // Account created successfully in the backend
         saveSession(data.data.token, data.data.user);
         if (onLogin) onLogin(data.data.user.name);
-        navigate("/home");
+        
+        // Navigate to the welcome page instead of home
+        navigate("/welcome"); 
       } else {
         setError(data.detail || data.message || "Signup failed. Please try again.");
       }
@@ -88,13 +91,11 @@ export default function Signup({ onLogin }) {
       {/* Left panel */}
       <div className="login-left">
         <div className="brand-badge">
-          <div className="brand-badge">
-                    <img 
-                      src={vidyaLogo} 
-                      alt="Vidhya Logo" 
-                      className="brand-logo-img" 
-                    />
-                  </div>
+          <img 
+            src={vidyaLogo} 
+            alt="Vidhya Logo" 
+            className="brand-logo-img" 
+          />
         </div>
         <h1 className="login-headline">Start Your<br /><em>Success</em><br />Story Today.</h1>
         <p className="login-sub">Join thousands of students preparing for NEET, JEE and Board exams.</p>

@@ -161,12 +161,6 @@ export default function Login({ onLogin }) {
               width="360"
             />
           </div>
-
-          <div className="google-note">
-            ℹ️ Google sign-in requires your backend to be running and{" "}
-            <code>http://localhost:3000</code> added to your Google Cloud Console OAuth origins.
-          </div>
-
           <div className="signup-row">
             New to Vidhya?{" "}
             <button className="link-btn" onClick={() => navigate("/signup")}>
