@@ -95,7 +95,7 @@ def create_app() -> FastAPI:
     async def global_exception_handler(request: Request, exc: Exception):
         logger.error(f"Unhandled error on {request.url}: {exc}")
         return JSONResponse(
-            status_code=500,
+            status_code=500, 
             content={"success": False, "message": "Internal server error."},
         )
 
