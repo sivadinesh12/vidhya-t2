@@ -1,171 +1,66 @@
 import React, { useState } from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom";
-import "./index.css";
-import vidyaLogo from "../../assets/logo.png";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom"; 
+import "./index.css"; 
 
-const API_URL = "https://vidya-beige.vercel.app/api/v1";
-
-const saveSession = (token, user) => {
-  localStorage.setItem("vidhya_token", token);
-  localStorage.setItem("vidhya_user", JSON.stringify(user));
-};
-
-export default function Login({ onLogin }) {
+export default function Login({ onLogin }) { 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSubmit();
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !password) { setError("Please enter your credentials."); return; }
-    if (!emailRegex.test(email)) { setError("Please enter a valid email."); return; }
+    if (!emailRegex.test(email)) { setError("Please enter a valid email format."); return; }
     if (password.length < 4) { setError("Password too short."); return; }
-
     setError("");
-    setLoading(true);
-
-    try {
-      const res = await fetch(`${API_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.toLowerCase(), password }),
-      });
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        saveSession(data.data.token, data.data.user);
-        onLogin(data.data.user.name);
-        navigate("/home");
-      } else {
-        setError(data.detail || data.message || "Invalid email or password.");
-      }
-    } catch {
-      setError("Cannot reach server. Start your Python backend on port 5000.");
-    } finally {
-      setLoading(false);
-    }
+    onLogin(email.split("@")[0] || "Student"); 
+    navigate("/home"); 
   };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    setLoading(true);
-    setError("");
-    try {
-      const res = await fetch(`${API_URL}/auth/google`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ credential: credentialResponse.credential }),
-      });
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        saveSession(data.data.token, data.data.user);
-        onLogin(data.data.user.name);
-        navigate("/home");
-      } else {
-        setError(data.detail || data.message || "Google login failed. Try email login instead.");
-      }
-    } catch {
-      setError("Cannot reach server. Start your Python backend on port 5000.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogleError = () => {
-    setError(
-      "Google sign-in failed. Make sure http://localhost:3000 is added as an " +
-      "Authorized JavaScript Origin in your Google Cloud Console for this Client ID."
-    );
-  };
+  const googleLogin = useGoogleLogin({
+    onSuccess: () => { onLogin("Google User"); navigate("/home"); },
+    onError: () => setError("Google Login failed."),
+  });
 
   return (
     <div className="login-wrap">
-      {/* Left dark panel */}
       <div className="login-left">
         <div className="brand-badge">
-          <img 
-            src={vidyaLogo} 
-            alt="Vidhya Logo" 
-            className="brand-logo-img" 
-          />
+          <div className="brand-badge-dot" />
+          <span>Vidhya</span>
         </div>
-        <h1 className="login-headline">
-          Your <br />
-          <em>Personal</em> AI <br />
-          Teacher
-        </h1>
+        <h1 className="login-headline">Master Every<br /><em>Exam</em> with<br />Confidence.</h1>
       </div>
-
-      {/* Right cream panel */}
       <div className="login-right">
-        <div className="login-card">
+        <div className="login-card fade-up">
           <h2>Welcome back 👋</h2>
           <p>Sign in to continue your study journey.</p>
-
-          {error && (
-            <div className="error-banner">
-              ⚠️ {error}
-            </div>
-          )}
-
+          {error && <div className="error-banner">{error}</div>}
           <div className="form-group">
-            <label className="form-label">EMAIL ADDRESS</label>
-            <input
-              className="form-input"
-              type="email"
-              value={email}
-              placeholder="you@example.com"
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={loading}
-            />
+            <label className="form-label">Email Address</label>
+            <input className="form-input" type="email" placeholder="you@example.com" value={email}
+              onChange={(e) => setEmail(e.target.value)} />
           </div>
-
           <div className="form-group">
-            <label className="form-label">PASSWORD</label>
-            <input
-              className="form-input"
-              type="password"
-              value={password}
-              placeholder="••••••••"
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={handleKeyDown}
-              disabled={loading}
-            />
+            <label className="form-label">Password</label>
+            <input className="form-input" type="password" value={password}
+              onChange={e => setPassword(e.target.value)} />
           </div>
-
-          <button
-            className="btn-primary"
-            onClick={handleSubmit}
-            disabled={loading}
-            style={{ opacity: loading ? 0.7 : 1, cursor: loading ? "not-allowed" : "pointer" }}
-          >
-            {loading ? "Signing in…" : "Sign In →"}
+          <button className="btn-primary" onClick={handleSubmit}>Sign In →</button>
+          <div className="divider">or continue with</div>
+          <button className="btn-secondary" style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }} onClick={() => googleLogin()}>
+            <svg width="18" height="18" viewBox="0 0 48 48">
+              <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+              <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+              <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+              <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+            </svg>
+            Sign in with Google
           </button>
-
-          <div className="divider"><span>or continue with</span></div>
-
-          <div className="social-row" style={{ display: "flex", justifyContent: "center", width: "100%" }}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              theme="outline"
-              shape="rectangular"
-              width="360"
-            />
-          </div>
           <div className="signup-row">
-            New to Vidhya?{" "}
-            <button className="link-btn" onClick={() => navigate("/signup")}>
-              Create free account
-            </button>
+            New to Vidhya? <button onClick={() => navigate("/signup")}>Create free account</button>
           </div>
         </div>
       </div>
