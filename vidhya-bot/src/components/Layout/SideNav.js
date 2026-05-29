@@ -2,19 +2,12 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./SideNav.css";
 
+// "Study" section completely removed
 const NAV = [
   {
     label: "Main",
     items: [
       { icon: "🏠", label: "Home",         path: "/home" },
-    ],
-  },
-  {
-    label: "Study",
-    items: [
-      { icon: "📖", label: "NCERT Books",  path: "/ncert" },
-      { icon: "🏥", label: "NEET Syllabus",path: "/neet" },
-      { icon: "⚗️",  label: "JEE Books",   path: "/jee" },
     ],
   },
   {
@@ -46,10 +39,29 @@ export default function SideNav({ userName, onLogout, collapsed, setCollapsed })
 
   return (
     <aside className={`sidenav ${collapsed ? "collapsed" : ""}`}>
-      {/* Logo */}
-      <div className="sidenav-logo">
-        <div className="sidenav-logo-icon">📚</div>
-        {!collapsed && <span className="sidenav-logo-text">VIDYA</span>}
+      
+      {/* HEADER WITH ICON AND TEXT LOGO */}
+      <div className="sidenav-header" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        
+        {/* 1. The Icon */}
+        <img 
+          src={require("../../assets/vidya_icon.png")} 
+          alt="Vidya Icon" 
+          style={{ width: '36px', height: '36px', borderRadius: '8px' }} 
+        />
+        
+        {/* 2. The Text Logo */}
+        <img 
+          src={require("../../assets/vidya_text.png")} 
+          alt="Vidya Text Logo" 
+          className="sidenav-brand" 
+          style={{ 
+            height: '70px', 
+            objectFit: 'contain',
+            filter: 'brightness(0) invert(1)' // 🔥 This forces the colored text to pure white
+          }} 
+        />
+        
       </div>
 
       {/* Collapse toggle */}

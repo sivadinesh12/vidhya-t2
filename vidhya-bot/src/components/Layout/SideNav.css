@@ -60,6 +60,7 @@
   z-index: 10;
   transition: background 0.2s;
   line-height: 1;
+  margin-right: 20px;
 }
 
 .sidenav-toggle:hover { background: var(--gold-light); }
