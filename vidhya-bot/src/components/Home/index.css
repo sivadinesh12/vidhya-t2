@@ -1,4 +1,3 @@
-
 /* ═══════════════════════════════════════════
    VIDYA HOME PAGE — CLEAN CSS (no conflicts)
    All classes prefixed with home- to avoid
@@ -430,4 +429,141 @@
   .home-hero-btns {
     flex-direction: column;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HOME TOP NAVBAR — professional horizontal bar
+═══════════════════════════════════════════════════════════ */
+.home-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 54px;
+  min-height: 54px;
+  background: #ffffff;
+  border-bottom: 1px solid #e8edf5;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Left: page title */
+.home-topbar-left {
+  display: flex;
+  align-items: center;
+}
+.home-topbar-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a2236;
+  letter-spacing: 0.3px;
+}
+
+/* Right: nav + user */
+.home-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Nav pills */
+.home-topnav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.home-topnav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #7a8499;
+  letter-spacing: 0.2px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.home-topnav-btn:hover {
+  background: #f0f4ff;
+  color: #2f4cad;
+}
+.home-topnav-btn.active {
+  background: #eef2ff;
+  color: #2f4cad;
+}
+.home-topnav-btn.active .home-topnav-icon svg {
+  stroke: #2f4cad;
+}
+
+.home-topnav-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.home-topnav-icon svg {
+  stroke: currentColor;
+  transition: stroke 0.15s;
+}
+
+/* Thin vertical divider */
+.home-topbar-divider {
+  width: 1px;
+  height: 20px;
+  background: #e2e8f0;
+  margin: 0 10px;
+  flex-shrink: 0;
+}
+
+/* User section */
+.home-topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.home-topbar-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a78bfa, #7c5cbf);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.home-topbar-username {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #4a5568;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Quick access cards use SVG icons now — fix icon sizing */
+.home-quick-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #f0f4ff;
+  flex-shrink: 0;
+}
+.home-quick-icon svg {
+  stroke: #2f4cad;
 }

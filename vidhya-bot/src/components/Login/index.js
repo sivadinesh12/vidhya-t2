@@ -16,11 +16,11 @@ export default function Login({ onLogin }) {
     if (password.length < 4) { setError("Password too short."); return; }
     setError("");
     onLogin(email.split("@")[0] || "Student"); 
-    navigate("/home"); 
+    navigate("/vidya");  // ← Go to VIDYA AI after login
   };
 
   const googleLogin = useGoogleLogin({
-    onSuccess: () => { onLogin("Google User"); navigate("/home"); },
+    onSuccess: () => { onLogin("Google User"); navigate("/vidya"); },  // ← Go to VIDYA AI after Google login
     onError: () => setError("Google Login failed."),
   });
 

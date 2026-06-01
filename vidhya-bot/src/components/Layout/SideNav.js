@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./SideNav.css";
 
-// "Study" section completely removed
 const NAV = [
   {
     label: "Main",
@@ -25,12 +24,7 @@ const NAV = [
       { icon: "📈", label: "Progress",    path: "/progress" },
     ],
   },
-  {
-    label: "AI Tutor",
-    items: [
-      { icon: "🤖", label: "VIDYA AI",    path: "/vidya" },
-    ],
-  },
+  // AI Tutor section removed — VIDYA AI is now the main homepage after login
 ];
 
 export default function SideNav({ userName, onLogout, collapsed, setCollapsed }) {
@@ -58,7 +52,7 @@ export default function SideNav({ userName, onLogout, collapsed, setCollapsed })
           style={{ 
             height: '70px', 
             objectFit: 'contain',
-            filter: 'brightness(0) invert(1)' // 🔥 This forces the colored text to pure white
+            filter: 'brightness(0) invert(1)'
           }} 
         />
         

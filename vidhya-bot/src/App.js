@@ -6,7 +6,7 @@ import "./App.css";
 // Component Imports
 import Login        from './components/Login';
 import Signup       from './components/signup';
-import Welcome from './components/Welcome';// Assuming you created the Welcome folder here
+import Welcome      from './components/Welcome';
 import Home         from "./components/Home";
 import NEETSyllabus from "./components/pages/NEETSyllabus";
 import JEEBooks     from "./components/pages/Jeebooks";
@@ -45,7 +45,10 @@ export default function App() {
           <Route path="/signup"        element={<Signup onLogin={handleLogin} />} />
           <Route path="/welcome"       element={<Welcome />} />
 
-          {/* Protected Routes */}
+          {/* VIDYA AI is the default home after login */}
+          <Route path="/vidya"         element={<P el={<VIDYAPage    userName={user} onLogout={handleLogout} />} />} />
+
+          {/* Dashboard pages (with SideNav) */}
           <Route path="/home"          element={<P el={<Home         userName={user} onLogout={handleLogout} />} />} />
           <Route path="/neet"          element={<P el={<NEETSyllabus userName={user} onLogout={handleLogout} />} />} />
           <Route path="/jee"           element={<P el={<JEEBooks     userName={user} onLogout={handleLogout} />} />} />
@@ -55,10 +58,9 @@ export default function App() {
           <Route path="/flashcards"    element={<P el={<Flashcards   userName={user} onLogout={handleLogout} />} />} />
           <Route path="/study-planner" element={<P el={<StudyPlanner userName={user} onLogout={handleLogout} />} />} />
           <Route path="/progress"      element={<P el={<Progress     userName={user} onLogout={handleLogout} />} />} />
-          <Route path="/vidya"         element={<P el={<VIDYAPage    userName={user} onLogout={handleLogout} />} />} />
 
-          {/* Fallback Route */}
-          <Route path="*"              element={<Navigate to="/login" />} />
+          {/* Fallback → VIDYA AI if logged in, else login */}
+          <Route path="*" element={user ? <Navigate to="/vidya" /> : <Navigate to="/login" />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>

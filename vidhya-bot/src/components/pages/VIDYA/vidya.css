@@ -7,12 +7,14 @@
   font-family: 'Plus Jakarta Sans', 'DM Sans', sans-serif;
 }
 
-/* ── Sidebar ──────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   VIDYA SIDEBAR
+═══════════════════════════════════════════════════════════ */
 .vidya-sidebar {
-  width: 300px;
-  min-width: 300px;
+  width: 290px;
+  min-width: 290px;
   background: #0d1117;
-  border-right: 1px solid #21262d;
+  border-right: 1px solid #1e2430;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -28,28 +30,23 @@
   gap: 16px;
 }
 
-/* Brand */
-.vidya-brand { display: flex; align-items: center; gap: 10px; }
-.vidya-brand-icon {
-  width: 34px; height: 34px;
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; flex-shrink: 0;
-}
-.vidya-brand-text {
-  font-family: 'Yeseva One', 'Playfair Display', serif;
-  color: #e6edf3;
-  font-size: 1.2rem; line-height: 1;
-}
-.vidya-brand-sub {
-  font-size: 0.62rem;
-  color: var(--vidya-accent);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-top: 2px;
+.vidya-brand { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+
+.vidya-brand-logo-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
-/* Exam badges */
+.vidya-brand-logo-text {
+  height: 75px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
 .vidya-exam-row { display: flex; gap: 6px; flex-wrap: wrap; }
 .vidya-badge {
   padding: 4px 10px;
@@ -63,7 +60,6 @@
 .badge-jeea  { background: rgba(163,113,247,0.12);color: #a371f7; border: 1.5px solid rgba(163,113,247,0.3); }
 .badge-board { background: rgba(247,163,37,0.12); color: #f7a325; border: 1.5px solid rgba(247,163,37,0.3); }
 
-/* Avatar stage */
 .vidya-avatar-stage {
   position: relative;
   height: 205px;
@@ -105,7 +101,6 @@
   50%       { transform: translateY(-7px); }
 }
 
-/* Teacher info */
 .vidya-teacher-info { text-align: center; padding: 0 16px; }
 .vidya-teacher-info h2 {
   font-family: 'Yeseva One', 'Playfair Display', serif;
@@ -134,38 +129,8 @@
   border: 1px solid #21262d;
 }
 
-/* Divider / labels */
-.vidya-divider { height: 1px; background: #21262d; margin: 10px 0; }
-.vidya-section-label {
-  font-size: 0.63rem; font-weight: 700;
-  letter-spacing: 1.5px; opacity: 0.4;
-  text-transform: uppercase;
-  padding: 0 18px; color: #8b9ab5;
-  margin-bottom: 8px;
-}
+.vidya-divider { height: 1px; background: #1e2430; margin: 10px 0; }
 
-/* Teacher grid */
-.vidya-teacher-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px;
-  padding: 0 18px 8px;
-}
-.vidya-t-card {
-  background: #161b22;
-  border: 1.5px solid #21262d;
-  border-radius: 11px;
-  padding: 10px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.vidya-t-card:hover { transform: translateY(-2px); }
-.vidya-t-icon  { font-size: 1.3rem; margin-bottom: 3px; }
-.vidya-t-name  { font-size: 0.7rem; font-weight: 700; color: #e6edf3; }
-.vidya-t-sub   { font-size: 0.6rem; color: #8b9ab5; margin-top: 1px; }
-
-/* Quick questions */
 .vidya-qt-wrap { padding: 4px 18px 16px; }
 .vidya-qt-label {
   font-size: 0.63rem; font-weight: 700;
@@ -189,7 +154,6 @@
 }
 .vidya-qt-btn:hover { border-color: var(--vidya-accent); color: #e6edf3; }
 
-/* Voice */
 .vidya-voice-wrap { padding: 0 18px 18px; }
 .vidya-voice-btn {
   width: 100%;
@@ -203,67 +167,217 @@
   cursor: pointer;
   transition: 0.2s;
 }
+.vidya-voice-btn:hover { border-color: var(--vidya-accent); color: #e6edf3; }
 
-/* ── Chat main ───────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   CHAT MAIN
+═══════════════════════════════════════════════════════════ */
 .vidya-chat-main {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 0;
 }
 
-.vidya-chat-header {
-  padding: 13px 26px;
-  border-bottom: 1px solid #21262d;
+/* ═══════════════════════════════════════════════════════════
+   TOP NAVBAR  — professional horizontal bar
+═══════════════════════════════════════════════════════════ */
+.vidya-topbar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(13,17,23,0.9);
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  min-height: 52px;
+  background: #0d1117;
+  border-bottom: 1px solid #1e2430;
+  flex-shrink: 0;
+  gap: 16px;
 }
-.vidya-chat-header-name {
-  font-family: 'Yeseva One', 'Playfair Display', serif;
-  color: #e6edf3;
-  font-size: 1rem;
-}
-.vidya-status-dot {
-  font-size: 0.68rem;
-  color: #3fb950;
+
+/* Left side: status */
+.vidya-topbar-left {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
+  flex-shrink: 0;
 }
-.vidya-status-dot::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: #3fb950;
+
+.vidya-topbar-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: #4b5675;
+  letter-spacing: 0.3px;
+}
+
+.vidya-topbar-dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  display: inline-block;
-  animation: vidyaSp 2s infinite;
+  background: #3fb950;
+  flex-shrink: 0;
+  animation: vidyaSp 2.5s infinite;
 }
 @keyframes vidyaSp { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-.vidya-exam-ind {
-  margin-left: auto;
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 4px 11px;
-  border-radius: 20px;
+/* Stop speaking button — appears only while speaking */
+.vidya-stop-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1.5px solid #2a3142;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #8b9ab5;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  animation: vidyaFadeIn 0.2s ease;
+}
+.vidya-stop-btn:hover {
+  border-color: #e06060;
+  color: #e06060;
+  background: rgba(220,80,80,0.07);
+}
+.vidya-stop-btn svg { stroke: currentColor; flex-shrink: 0; }
+@keyframes vidyaFadeIn { from { opacity: 0; transform: translateX(-4px); } to { opacity: 1; transform: none; } }
+
+/* Right side: nav + user */
+.vidya-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
-/* Chatbox */
+/* Nav pills container */
+.vidya-topnav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Individual nav button */
+.vidya-topnav-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #5a657a;
+  letter-spacing: 0.2px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+.vidya-topnav-btn:hover {
+  background: rgba(255,255,255,0.05);
+  color: #c9d1d9;
+}
+.vidya-topnav-btn.active {
+  background: rgba(167,139,250,0.1);
+  color: #a78bfa;
+}
+.vidya-topnav-btn.active .vidya-topnav-icon svg {
+  stroke: #a78bfa;
+}
+
+.vidya-topnav-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.vidya-topnav-icon svg {
+  stroke: currentColor;
+  transition: stroke 0.15s;
+}
+
+/* Thin vertical divider */
+.vidya-topbar-divider {
+  width: 1px;
+  height: 20px;
+  background: #1e2430;
+  margin: 0 8px;
+  flex-shrink: 0;
+}
+
+/* User section */
+.vidya-topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+.vidya-topbar-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a78bfa, #7c5cbf);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.vidya-topbar-username {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: #8b9ab5;
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vidya-topbar-logout {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  cursor: pointer;
+  color: #4b5675;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+.vidya-topbar-logout:hover {
+  background: rgba(220,80,80,0.12);
+  color: #e06060;
+}
+.vidya-topbar-logout svg { stroke: currentColor; }
+
+/* ═══════════════════════════════════════════════════════════
+   CHATBOX
+═══════════════════════════════════════════════════════════ */
 .vidya-chatbox {
   flex: 1;
   overflow-y: auto;
-  padding: 26px 30px;
+  padding: 24px 28px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 14px;
   scroll-behavior: smooth;
 }
 .vidya-chatbox::-webkit-scrollbar { width: 3px; }
 .vidya-chatbox::-webkit-scrollbar-thumb { background: #21262d; border-radius: 3px; }
 
-/* Welcome card */
 .vidya-welcome-card {
   border: 1px solid;
   border-radius: 14px;
@@ -280,41 +394,28 @@
   line-height: 1.65;
   color: #8b9ab5;
 }
-.vidya-w-tags  { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
-.vidya-w-tag   {
+.vidya-w-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; }
+.vidya-w-tag {
   padding: 3px 9px; border-radius: 20px;
   font-size: 0.65rem; font-weight: 600;
   background: rgba(255,255,255,0.05);
   border: 1px solid #21262d; color: #8b9ab5;
 }
 
-/* Messages */
 .vidya-msg {
-  max-width: 75%;
-  padding: 13px 17px;
-  border-radius: 17px;
-  font-size: 0.88rem;
+  max-width: 74%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 0.87rem;
   line-height: 1.7;
-  animation: vidyaSlideUp 0.3s ease-out;
+  animation: vidyaSlideUp 0.25s ease-out;
   white-space: pre-wrap;
 }
 @keyframes vidyaSlideUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.vidya-msg.bot {
-  background: #161b22;
-  border: 1px solid #21262d;
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-  color: #e6edf3;
-}
-.vidya-msg.user {
-  color: #000;
-  font-weight: 700;
-  align-self: flex-end;
-  border-bottom-right-radius: 4px;
-}
+.vidya-msg.bot,
 .vidya-msg.greeting {
   background: #161b22;
   border: 1px solid #21262d;
@@ -322,8 +423,13 @@
   border-bottom-left-radius: 4px;
   color: #e6edf3;
 }
+.vidya-msg.user {
+  color: #fff;
+  font-weight: 600;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
 
-/* Typing dots */
 .vidya-typing {
   display: flex !important;
   gap: 5px !important;
@@ -340,142 +446,178 @@
 .vidya-typing span:nth-child(3) { animation-delay: .4s; }
 @keyframes vidyaBl { 0%,80%,100%{opacity:0.15} 40%{opacity:1} }
 
-/* Input area */
-.vidya-input-area {
-  padding: 15px 22px;
-  background: #0d1117;
-  border-top: 1px solid #21262d;
+/* ── Image preview bar ── */
+.vidya-img-preview-bar {
   display: flex;
+  align-items: center;
   gap: 10px;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.03);
+  border-top: 1px solid #1e2430;
+}
+.vidya-img-preview-thumb {
+  width: 48px; height: 48px;
+  object-fit: cover;
+  border-radius: 7px;
+  border: 1.5px solid var(--vidya-accent);
+  flex-shrink: 0;
+}
+.vidya-img-preview-name {
+  flex: 1;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vidya-img-preview-remove {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  border-radius: 50%;
+  width: 24px; height: 24px;
+  cursor: pointer;
+  color: #8b9ab5;
+  font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.vidya-img-preview-remove:hover { background: rgba(220,80,80,0.2); color: #e06060; }
+
+/* ── Input area ── */
+.vidya-input-area {
+  padding: 12px 18px;
+  background: #0d1117;
+  border-top: 1px solid #1e2430;
+  display: flex;
+  gap: 8px;
   align-items: center;
 }
+
+.vidya-upload-btn {
+  width: 40px; height: 40px;
+  background: transparent;
+  border: 1.5px solid #2a3142;
+  border-radius: 9px;
+  cursor: pointer;
+  color: #4b5675;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.vidya-upload-btn:hover:not(:disabled) {
+  border-color: var(--vidya-accent);
+  color: var(--vidya-accent);
+  background: rgba(167,139,250,0.06);
+}
+.vidya-upload-btn.active {
+  border-color: var(--vidya-accent);
+  color: var(--vidya-accent);
+  background: rgba(167,139,250,0.1);
+}
+.vidya-upload-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.vidya-upload-btn svg { stroke: currentColor; }
+
 .vidya-input {
   flex: 1;
   background: #161b22;
-  border: 1.5px solid #21262d;
+  border: 1.5px solid #2a3142;
   color: #e6edf3;
-  padding: 13px 15px;
-  border-radius: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
   outline: none;
   font-family: inherit;
-  font-size: 0.88rem;
-  transition: 0.2s;
+  font-size: 0.87rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 .vidya-input:focus {
   border-color: var(--vidya-accent);
-  box-shadow: 0 0 0 3px rgba(var(--vidya-accent-rgb), 0.08);
+  box-shadow: 0 0 0 3px rgba(var(--vidya-accent-rgb), 0.07);
 }
-.vidya-input::placeholder { color: #8b9ab5; }
+.vidya-input::placeholder { color: #3d4a5c; }
+.vidya-input:disabled { opacity: 0.5; cursor: not-allowed; }
+
 .vidya-send-btn {
   border: none;
-  width: 44px; height: 44px;
-  border-radius: 11px;
+  width: 40px; height: 40px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: transform 0.15s, filter 0.15s;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.vidya-send-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-.vidya-send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.vidya-send-btn:hover:not(:disabled) { transform: translateY(-1px); filter: brightness(1.12); }
+.vidya-send-btn:disabled { opacity: 0.38; cursor: not-allowed; transform: none; }
 
-/* ─── Gemini API Key Modal ───────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   API KEY MODAL
+═══════════════════════════════════════════════════════════ */
 .vidya-key-overlay {
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0,0,0,0.78);
   display: flex;
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(6px);
   animation: fadein 0.2s ease;
 }
-
 @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
 
 .vidya-key-modal {
   background: #161b22;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 40px 36px;
-  max-width: 440px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px;
+  padding: 38px 34px;
+  max-width: 430px;
   width: 90%;
   text-align: center;
   box-shadow: 0 24px 64px rgba(0,0,0,0.6);
-  animation: modal-pop 0.25s cubic-bezier(0.34,1.5,0.64,1);
+  animation: modal-pop 0.22s cubic-bezier(0.34,1.5,0.64,1);
 }
-
 @keyframes modal-pop {
-  from { transform: scale(0.88); opacity: 0; }
-  to   { transform: scale(1);    opacity: 1; }
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
 }
-
-.vidya-key-icon {
-  font-size: 40px;
-  margin-bottom: 12px;
-}
-
+.vidya-key-icon { font-size: 38px; margin-bottom: 12px; }
 .vidya-key-modal h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 10px;
+  font-size: 19px; font-weight: 700;
+  color: #fff; margin: 0 0 10px;
 }
-
 .vidya-key-modal p {
-  font-size: 14px;
-  color: rgba(255,255,255,0.6);
-  line-height: 1.6;
-  margin: 0 0 20px;
+  font-size: 13.5px; color: rgba(255,255,255,0.55);
+  line-height: 1.65; margin: 0 0 20px;
 }
-
-.vidya-key-modal a {
-  color: #4dabf7;
-  text-decoration: underline;
-}
-
+.vidya-key-modal a { color: #4dabf7; text-decoration: underline; }
 .vidya-key-input {
   width: 100%;
-  padding: 12px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.06);
+  padding: 11px 15px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   font-family: monospace;
   outline: none;
   box-sizing: border-box;
-  margin-bottom: 14px;
+  margin-bottom: 13px;
   transition: border 0.2s;
 }
-
-.vidya-key-input:focus {
-  border-color: rgba(255,255,255,0.35);
-}
-
+.vidya-key-input:focus { border-color: rgba(255,255,255,0.3); }
 .vidya-key-btn {
-  width: 100%;
-  padding: 13px;
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  width: 100%; padding: 12px;
+  border: none; border-radius: 9px;
+  color: #fff; font-size: 14px; font-weight: 700;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
   transition: opacity 0.18s, transform 0.15s;
 }
-
-.vidya-key-btn:hover {
-  opacity: 0.88;
-  transform: translateY(-1px);
-}
-
+.vidya-key-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 .vidya-key-note {
   font-size: 12px !important;
-  color: rgba(255,255,255,0.35) !important;
+  color: rgba(255,255,255,0.3) !important;
   margin-top: 12px !important;
   margin-bottom: 0 !important;
 }
